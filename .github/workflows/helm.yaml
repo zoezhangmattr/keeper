@@ -30,7 +30,7 @@ jobs:
       
       - name: save helm chart to local registry
         run: |
-          helm package ${{ github.workspace }}/chart/ ${{ env.GCR_IMAGE }}:${{ github.ref_name }}
+          helm package ${{ github.workspace }}/chart/
       
       - name: publish chart to acr
         run: |
