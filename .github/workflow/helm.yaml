@@ -1,0 +1,37 @@
+name: helm
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+env:
+  HELM_EXPERIMENTAL_OCI: 1 #enable OCI support
+  HELM_VERSION_TO_INSTALL: v3.8.0 # version of HEL to install
+  GCR_IMAGE: ghcr.io/${{ github.repository_owner }}/keeper
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: ${{ env.HELM_VERSION_TO_INSTALL }}
+      - name: login to acr using helm
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | helm registry login ${{ env.GCR_IMAGE }} --username ${{ github.repository_owner }} --password-stdin
+      
+      - name: save helm chart to local registry
+        run: |
+          helm chart save ${{ github.workspace }}/src/azure-vote-helm-chart/ ${{ env.GCR_IMAGE }}:${{ github.sha }}
+      
+      - name: publish chart to acr
+        run: |
+          helm chart push ${{ env.GCR_IMAGE }}:${{ github.sha }}

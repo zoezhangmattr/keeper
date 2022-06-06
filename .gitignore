@@ -1,0 +1,6 @@
+*.env
+*.zip
+*test*.sh
+keeper
+*test*.yaml
+.DS_Store

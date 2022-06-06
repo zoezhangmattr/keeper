@@ -1,0 +1,11 @@
+apiVersion: v2
+name: keeper
+description: A Helm chart for keeper
+maintainers:
+- email: baotingzhang@gmail.com
+  name: zoe zhang
+type: application
+
+version: 0.1.0
+
+appVersion: "1.0.0"
