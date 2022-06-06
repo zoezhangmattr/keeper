@@ -15,5 +15,5 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: "zoezhangmattr/keeper:${{ github.ref_name }}"
+          tags: zoezhangmattr/keeper:${{ github.ref_name }}
 
