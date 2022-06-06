@@ -34,4 +34,4 @@ jobs:
       
       - name: publish chart to acr
         run: |
-          helm push ${{ env.GCR_IMAGE }}:${{ github.ref_name }}
+          helm push chart ${{ env.GCR_IMAGE }}:${{ github.ref_name }}
