@@ -30,8 +30,8 @@ jobs:
       
       - name: save helm chart to local registry
         run: |
-          helm chart save ${{ github.workspace }}/src/azure-vote-helm-chart/ ${{ env.GCR_IMAGE }}:${{ github.sha }}
+          helm chart save ${{ github.workspace }}/schart/ ${{ env.GCR_IMAGE }}:${{ github.ref_name }}
       
       - name: publish chart to acr
         run: |
-          helm chart push ${{ env.GCR_IMAGE }}:${{ github.sha }}
+          helm chart push ${{ env.GCR_IMAGE }}:${{ github.ref_name }}
